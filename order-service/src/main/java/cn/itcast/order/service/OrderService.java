@@ -1,12 +1,11 @@
 package cn.itcast.order.service;
 
-import cn.itcast.order.client.UserClient;
+import cn.itcast.feign.client.UserClient;
+import cn.itcast.feign.pojo.User;
 import cn.itcast.order.mapper.OrderMapper;
 import cn.itcast.order.pojo.Order;
-import cn.itcast.order.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class OrderService {
@@ -28,7 +27,7 @@ public class OrderService {
 //        User user = restTemplate.getForObject(url,User.class);
 
         //利用feign来发起http请求查询用户，并代替了RestTemplate发起http请求
-        User user = userClient.findById(order.getId());
+        User user = userClient.findById(order.getUserId());
         order.setUser(user);
         // 4.返回
         return order;
